@@ -1,4 +1,6 @@
-package app;
+package app.controller;
+
+import app.controller.User;
 
 import java.util.ArrayList;
 

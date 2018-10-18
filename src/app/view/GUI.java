@@ -1,4 +1,8 @@
-package app;
+package app.view;
+
+import app.controller.App;
+import app.controller.Question;
+import app.controller.User;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -356,7 +360,7 @@ public class GUI extends JFrame {
         _panel.repaint();
     }
 
-    void end(final App app) {
+    public void end(final App app) {
         JLabel score = new JLabel("Your score is " + Integer.toString(app.getUser().getScore()) + "/10");
         JButton button_validate = new JButton("Back to the menu");
 

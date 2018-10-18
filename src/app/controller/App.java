@@ -1,4 +1,7 @@
-package app;
+package app.controller;
+
+import app.model.DatabaseManager;
+import app.view.GUI;
 
 import javax.swing.*;
 import java.sql.ResultSet;
@@ -24,41 +27,41 @@ public class App {
         setGUI();
     }
 
-    void setGUI() {
+    public void setGUI() {
         _frame.displayUserSelection(this, _users_manager.getUsers());
         _frame.setSize(500,500);
         _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         _frame.setVisible(true);
     }
 
-    void launchMenu(User user) {
+    public void launchMenu(User user) {
         _user = user;
         _frame.displayMenu(this);
     }
 
-    void deleteMenu() {
+    public void deleteMenu() {
         _frame.displayDeleteAccount(this);
     }
 
-    void questionMenu() {
+    public void questionMenu() {
         _frame.displayQuestionMenu(this);
     }
 
-    void goUserSelection() {
+    public void goUserSelection() {
         _frame.displayUserSelection(this, _users_manager.getUsers());
     }
 
-    void returnMenu() {
+    public void returnMenu() {
         _frame.displayMenu(this);
     }
 
-    void deleteUser() {
+    public void deleteUser() {
         _users_manager.deleteUser(_user);
         _db_manager.deleteUser(_user);
         _frame.displayUserSelection(this, _users_manager.getUsers());
     }
 
-    void play() {
+    public void play() {
 
         if (_question_manager.getIndexQuestion() == 0) {
             ResultSet result = _db_manager.getQuestions();
@@ -86,7 +89,7 @@ public class App {
         }
     }
 
-    void validateAnswer(String answer) {
+    public void validateAnswer(String answer) {
         boolean result = _question_manager.getQuestion().checkGoodAnswers(answer);
         if (result == true) {
             _user.increaseScore();
@@ -97,7 +100,7 @@ public class App {
         _question_manager.increaseIndexQuestion();
     }
 
-    void classment() {
+    public void classment() {
         ResultSet res_list_players = _db_manager.getUsersClassment();
         ArrayList<User> list_players = new ArrayList<User>();
         try {
@@ -110,7 +113,7 @@ public class App {
         _frame.displayClassment(this, list_players);
     }
 
-    int createUser(String name) {
+    public int createUser(String name) {
         int id = _users_manager.countUsers()+1;
         _db_manager.createUser(id,name,0);
         _users_manager.addUser(new User(name,0));
@@ -128,7 +131,7 @@ public class App {
         }
     }
 
-    void updateScore() {
+    public void updateScore() {
         if (_user.getScore() > _user.getMaxScore()) {
             _user.setMaxScore(_user.getScore());
             _db_manager.updateMaxScore(_user);
@@ -137,7 +140,7 @@ public class App {
         _frame.displayMenu(this);
     }
 
-    void createQuestion(String content, ArrayList<String> answers, String good_answers, int type_question) {
+    public void createQuestion(String content, ArrayList<String> answers, String good_answers, int type_question) {
         String[] str_modify_good_answers = good_answers.split(";");
         Integer[] modify_good_answers = new Integer[str_modify_good_answers.length];
 
@@ -152,11 +155,11 @@ public class App {
         returnMenu();
     }
 
-    User getUser() {
+    public User getUser() {
         return _user;
     }
 
-    QuestionsManager getQuestionManager(){
+    public QuestionsManager getQuestionManager(){
         return _question_manager;
     }
 }

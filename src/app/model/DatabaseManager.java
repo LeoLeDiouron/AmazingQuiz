@@ -1,6 +1,8 @@
-package app;
+package app.model;
 
-import java.nio.charset.IllegalCharsetNameException;
+import app.controller.Question;
+import app.controller.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -26,7 +28,15 @@ public class DatabaseManager {
         }
     }
 
-    ResultSet exeResQuery(String query) {
+    public ResultSet exeResQuery(String query) {
+
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.print(e + "\n");
+        }
+
+
         try {
             ResultSet rs = _statement.executeQuery(query);
             return rs;
@@ -36,7 +46,7 @@ public class DatabaseManager {
         return null;
     }
 
-    void exeQuery(String query) {
+    public void exeQuery(String query) {
         try {
             _statement.executeQuery(query);
         } catch (java.sql.SQLException e) {
