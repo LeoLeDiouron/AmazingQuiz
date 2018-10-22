@@ -28,7 +28,7 @@ public class App {
     }
 
     public void setGUI() {
-        _frame.displayUserSelection(this, _users_manager.getUsers());
+        _frame.getMenu().displayUserSelection(this, _users_manager.getUsers());
         _frame.setSize(500,500);
         _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         _frame.setVisible(true);
@@ -36,29 +36,29 @@ public class App {
 
     public void launchMenu(User user) {
         _user = user;
-        _frame.displayMenu(this);
+        _frame.getMenu().displayMenu(this);
     }
 
     public void deleteMenu() {
-        _frame.displayDeleteAccount(this);
+        _frame.getMenu().displayDeleteAccount(this);
     }
 
     public void questionMenu() {
-        _frame.displayQuestionMenu(this);
+        _frame.getMenu().displayQuestionMenu(this);
     }
 
-    public void goUserSelection() {
-        _frame.displayUserSelection(this, _users_manager.getUsers());
+    public void userSelection() {
+        _frame.getMenu().displayUserSelection(this, _users_manager.getUsers());
     }
 
     public void returnMenu() {
-        _frame.displayMenu(this);
+        _frame.getMenu().displayMenu(this);
     }
 
     public void deleteUser() {
         _users_manager.deleteUser(_user);
         _db_manager.deleteUser(_user);
-        _frame.displayUserSelection(this, _users_manager.getUsers());
+        _frame.getMenu().displayUserSelection(this, _users_manager.getUsers());
     }
 
     public void play() {
@@ -81,9 +81,9 @@ public class App {
             }
         }
         if (_question_manager.getIndexQuestion() < _question_manager.getNumberQuestions())
-            _frame.displayGame(this);
+            _frame.getGame().displayGame(this);
         else {
-            _frame.end(this);
+            _frame.getGame().displayEndGame(this);
             _question_manager.clearQuestion();
             _question_manager.resetIndexQuestion();
         }
@@ -93,9 +93,9 @@ public class App {
         boolean result = _question_manager.getQuestion().checkGoodAnswers(answer);
         if (result == true) {
             _user.increaseScore();
-            _frame.displayQuestionOk(this);
+            _frame.getGame().displayQuestionOk(this);
         } else {
-            _frame.displayQuestionWrong(this, _question_manager.getQuestion().getGoodAnswer());
+            _frame.getGame().displayQuestionWrong(this, _question_manager.getQuestion().getGoodAnswer());
         }
         _question_manager.increaseIndexQuestion();
     }
@@ -110,7 +110,7 @@ public class App {
         } catch (java.sql.SQLException e) {
             System.out.printf("java.sql.SQLException : " + e.getMessage());
         }
-        _frame.displayClassment(this, list_players);
+        _frame.getMenu().displayClassment(this, list_players);
     }
 
     public int createUser(String name) {
@@ -137,7 +137,7 @@ public class App {
             _db_manager.updateMaxScore(_user);
         }
         _user.setScore(0);
-        _frame.displayMenu(this);
+        _frame.getMenu().displayMenu(this);
     }
 
     public void createQuestion(String content, ArrayList<String> answers, String good_answers, int type_question) {
@@ -150,7 +150,6 @@ public class App {
         Question question = new Question(
                 _user.getName(),content,answers,modify_good_answers, type_question
         );
-        //_question_manager.addQuestion(question);
         _db_manager.createQuestion(question);
         returnMenu();
     }
