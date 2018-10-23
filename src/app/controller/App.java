@@ -44,7 +44,7 @@ public class App {
     }
 
     public void questionMenu() {
-        _frame.getMenu().displayQuestionMenu(this);
+        _frame.getMenu().displayCreateQuestion(this, "");
     }
 
     public void userSelection() {
@@ -91,7 +91,7 @@ public class App {
 
     public void validateAnswer(String answer) {
         boolean result = _question_manager.getQuestion().checkGoodAnswers(answer);
-        if (result == true) {
+        if (result) {
             _user.increaseScore();
             _frame.getGame().displayQuestionOk(this);
         } else {
@@ -114,6 +114,7 @@ public class App {
     }
 
     public int createUser(String name) {
+        name = name.replace(",","").replace("'", "").replace("\"", "");
         int id = _users_manager.countUsers()+1;
         _db_manager.createUser(id,name,0);
         _users_manager.addUser(new User(name,0));
@@ -140,18 +141,57 @@ public class App {
         _frame.getMenu().displayMenu(this);
     }
 
-    public void createQuestion(String content, ArrayList<String> answers, String good_answers, int type_question) {
-        String[] str_modify_good_answers = good_answers.split(";");
-        Integer[] modify_good_answers = new Integer[str_modify_good_answers.length];
+    private String checkValidQuestion(String good_answer, String type_question) {
 
-        for (int i=0; i<str_modify_good_answers.length;i++) {
-            modify_good_answers[i] = Integer.parseInt(str_modify_good_answers[i]) - 1;
+        try {
+            int tmp = Integer.parseInt(type_question);
+            if (tmp < 1 || tmp > 4)
+                return "Error - type of question is invalid";
+        } catch (NumberFormatException e) {
+            return "Error - type of question is not a number";
         }
-        Question question = new Question(
-                _user.getName(),content,answers,modify_good_answers, type_question
-        );
-        _db_manager.createQuestion(question);
-        returnMenu();
+
+        if (good_answer.contains(";")) {
+            for (int i=0;i<good_answer.split(";").length;i++) {
+                try {
+                    int tmp = Integer.parseInt(good_answer.split(";")[i]);
+                    if (tmp < 1 || tmp > 4)
+                        return "Error - one of the answer index is invalid";
+                } catch (NumberFormatException e) {
+                    return "Error - one of the answer index is not a number";
+                }
+            }
+        }
+        if (Integer.parseInt(type_question) != 3) {
+            try {
+                int tmp = Integer.parseInt(good_answer);
+                if (tmp < 1 || tmp > 4)
+                    return "Error - answer index is invalid";
+            } catch (NumberFormatException e) {
+                return "Error - answer index is not a number";
+            }
+        }
+
+        return "Question added !";
+    }
+
+    public void createQuestion(String content, ArrayList<String> answers, String good_answers, String type_question) {
+
+        String message = checkValidQuestion(good_answers, type_question);
+
+        if (message.equals("Question added !")) {
+            String[] str_modify_good_answers = good_answers.split(";");
+            Integer[] modify_good_answers = new Integer[str_modify_good_answers.length];
+
+            for (int i = 0; i < str_modify_good_answers.length; i++) {
+                modify_good_answers[i] = Integer.parseInt(str_modify_good_answers[i]) - 1;
+            }
+            Question question = new Question(
+                    _user.getName(), content, answers, modify_good_answers, Integer.parseInt(type_question)
+            );
+            _db_manager.createQuestion(question);
+        }
+        _frame.getMenu().displayCreateQuestion(this, message);
     }
 
     public User getUser() {

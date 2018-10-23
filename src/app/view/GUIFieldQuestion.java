@@ -21,7 +21,7 @@ public class GUIFieldQuestion extends GUIQuestion{
         _button_validate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                app.validateAnswer(user_answer.getText());
+                app.validateAnswer(user_answer.getText().replace(",","").replace("'", "").replace("\"", ""));
             }
         });
         _panel.add(user_answer);

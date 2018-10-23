@@ -16,6 +16,8 @@ public class GUIDropdownQuestion extends GUIQuestion {
     public void display(final App app, Question question) {
         String[] answers = new String[4];
         for (int i=0;i<question.getAnswers().size();i++) {
+            System.out.print(i);
+            System.out.print(question.getAnswers().get(i));
             answers[i] = question.getAnswers().get(i);
         }
         final JComboBox dropdown = new JComboBox(answers);

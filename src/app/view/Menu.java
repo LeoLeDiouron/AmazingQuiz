@@ -161,47 +161,36 @@ public class Menu {
         _panel.repaint();
     }
 
-    public void displayQuestionMenu(final App app) {
+    public void displayCreateQuestion(final App app, String message) {
+
         JLabel text_title = new JLabel("Create a new question");
+        JLabel text_message = new JLabel(message);
         final JTextArea content_question = new JTextArea();
-        final JTextArea first_answer = new JTextArea();
-        final JTextArea second_answer = new JTextArea();
-        final JTextArea third_answer = new JTextArea();
-        final JTextArea fourth_answer = new JTextArea();
+        final JTextArea answers_area[] = new JTextArea[4];
+        final String numbers[] = {"first", "second", "third", "fourth"};
         final JTextArea correct_answer = new JTextArea();
         final JTextArea type_quiz = new JTextArea();
         JButton button_validate = new JButton("Validate");
         JButton button_cancel = new JButton("Cancel");
 
-        content_question.setBorder(BorderFactory.createCompoundBorder(_border,
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        first_answer.setBorder(BorderFactory.createCompoundBorder(_border,
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        second_answer.setBorder(BorderFactory.createCompoundBorder(_border,
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        third_answer.setBorder(BorderFactory.createCompoundBorder(_border,
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        fourth_answer.setBorder(BorderFactory.createCompoundBorder(_border,
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        correct_answer.setBorder(BorderFactory.createCompoundBorder(_border,
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-
+        content_question.setBorder(BorderFactory.createCompoundBorder(_border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        for (int i=0;i<answers_area.length;i++) {
+            answers_area[i] = new JTextArea();
+            answers_area[i].setBorder(BorderFactory.createCompoundBorder(_border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+            answers_area[i].append("Your " + numbers[i] + " answer here");
+        }
+        correct_answer.setBorder(BorderFactory.createCompoundBorder(_border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         content_question.append("Your question here...");
-        first_answer.append("Your first answer here...");
-        second_answer.append("Your second answer here...");
-        third_answer.append("Your third answer here...");
-        fourth_answer.append("Your fourth answer here...");
         correct_answer.append("What is the correct answer ? (between 1 and 4)");
         type_quiz.append("What is the type of your question (1:radiobutton, 2:dropdown list, 3:checkbox, 4:field) ?");
         button_validate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ArrayList<String> answers = new ArrayList<>();
-                answers.add(first_answer.getText());
-                answers.add(second_answer.getText());
-                answers.add(third_answer.getText());
-                answers.add(fourth_answer.getText());
-                app.createQuestion(content_question.getText(), answers, correct_answer.getText(), Integer.parseInt(type_quiz.getText()));
+                for (int i=0;i<answers_area.length;i++) {
+                    answers.add(answers_area[i].getText().replace(',', ' ').replace('\'', ' ').replace('"',' '));
+                }
+                app.createQuestion(content_question.getText(), answers, correct_answer.getText(), type_quiz.getText());
             }
         });
         button_cancel.addActionListener(new ActionListener() {
@@ -210,13 +199,16 @@ public class Menu {
                 app.returnMenu();
             }
         });
+
         _panel.removeAll();
         _panel.add(text_title);
+        if (message != "") {
+            _panel.add(text_message);
+        }
         _panel.add(content_question);
-        _panel.add(first_answer);
-        _panel.add(second_answer);
-        _panel.add(third_answer);
-        _panel.add(fourth_answer);
+        for (int i=0;i<answers_area.length;i++) {
+            _panel.add(answers_area[i]);
+        }
         _panel.add(correct_answer);
         _panel.add(type_quiz);
         _panel.add(button_validate);
