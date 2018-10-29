@@ -36,6 +36,7 @@ public class App {
 
     public void launchMenu(User user) {
         _user = user;
+        _frame.newGame();
         _frame.getMenu().displayMenu(this);
     }
 
@@ -80,12 +81,15 @@ public class App {
                 System.out.printf("java.sql.SQLException : " + e.getMessage());
             }
         }
-        if (_question_manager.getIndexQuestion() < _question_manager.getNumberQuestions())
+        if (_question_manager.getIndexQuestion() < _question_manager.getNumberQuestions()) {
             _frame.getGame().displayGame(this);
+
+        }
         else {
             _frame.getGame().displayEndGame(this);
             _question_manager.clearQuestion();
             _question_manager.resetIndexQuestion();
+            _frame.newGame();
         }
     }
 

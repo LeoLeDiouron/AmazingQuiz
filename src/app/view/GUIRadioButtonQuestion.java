@@ -25,8 +25,9 @@ public class GUIRadioButtonQuestion extends GUIQuestion {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (int i=0;i < answers.size();i++) {
-                    if (answers.get(i).isSelected())
+                    if (answers.get(i).isSelected()) {
                         app.validateAnswer(answers.get(i).getText());
+                    }
                 }
             }
         });

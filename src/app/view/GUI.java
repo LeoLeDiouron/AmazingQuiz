@@ -8,15 +8,21 @@ public class GUI extends JFrame {
 
     private Menu _menu;
     private Game _game;
+    private Border _border;
+    private JPanel _panel;
 
     public GUI(String name) {
         super(name);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
-        this.add(panel);
-        Border border = BorderFactory.createLineBorder(Color.BLACK);
-        _menu = new Menu(panel,border);
-        _game = new Game(panel,border);
+        _panel = new JPanel();
+        _panel.setLayout(new BoxLayout(_panel,BoxLayout.PAGE_AXIS));
+        this.add(_panel);
+        _border = BorderFactory.createLineBorder(Color.BLACK);
+        _menu = new Menu(_panel,_border);
+
+    }
+
+    public void newGame() {
+        _game = new Game(_panel,_border);
     }
 
     public Menu getMenu() {
