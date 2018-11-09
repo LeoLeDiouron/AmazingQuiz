@@ -35,12 +35,12 @@ Now, you need to add a build configuration :
 Download the JDBC driver here : https://jdbc.postgresql.org/download.html (select the version "PostgreSQL JDBC 4.2 Driver, 42.2.5")
 
 To put the downloaded file "postgresql-42.2.5" in the project :
-    - Press ctrl + alt + shift + s to open the project options
-    - Go in the "library" section
-    - Click on "+"
-    - Click on "java"
-    - Select the file "postgresql-42.2.5"
-    - Click on "ok"
+- Press ctrl + alt + shift + s to open the project options
+- Go in the "library" section
+- Click on "+"
+- Click on "java"
+- Select the file "postgresql-42.2.5"
+- Click on "ok"
 
 ### PART III : Run the project
 
