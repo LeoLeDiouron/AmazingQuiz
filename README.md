@@ -16,20 +16,19 @@ Next, open a terminal in the root folder of the project, and run this command :
 ### PART II : Install the project with IntelliJ
 
 Open the project in IntelliJ and press ctrl + alt + shift + s to open the project options :
-    - Define the JDK (a java version 10 at least is needed)
-    - Define the path of your project compiler output (select the path of your project and add "\out")
-    - Define the level of language at 7
-    - Go in the "module" section
-    - Select the "src" folder
-    - Mark it as "sources"
+- Define the JDK (a java version 10 at least is needed)
+- Define the path of your project compiler output (select the path of your project and add "\out")
+- Define the level of language at 7
+- Go in the "module" section
+- Select the "src" folder
+- Mark it as "sources"
 
 Now, you need to add a build configuration :
-    - Click on "add configuration"
-    - Click on "+"
-    - Select the template "Application"
-    - Add a Main class (the path of the main is "src/app/main")
-    - Add a working directory (the path of your project)
-    - Add a classpath of module (AmazingQuiz)
+- Click on "add configuration"
+- Click on "+"
+- Add a Main class (the path of the main is "src/app/main")
+- Add a working directory (the path of your project)
+- Add a classpath of module (AmazingQuiz)
 
 ### PART III : Install JDBC with IntelliJ
 
