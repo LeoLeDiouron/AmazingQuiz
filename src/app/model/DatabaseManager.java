@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import static java.lang.System.exit;
+
 public class DatabaseManager {
 
     private Connection _connection;
@@ -23,8 +25,10 @@ public class DatabaseManager {
             _statement = _connection.createStatement();
         } catch (java.lang.ClassNotFoundException e) {
             System.out.printf("java.lang.ClassNotFoundException : " + e.getMessage());
+            exit(0);
         } catch (java.sql.SQLException e) {
             System.out.printf("java.sql.SQLException : " + e.getMessage());
+            exit(0);
         }
     }
 
@@ -34,8 +38,8 @@ public class DatabaseManager {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             System.out.print(e + "\n");
+            exit(0);
         }
-
 
         try {
             ResultSet rs = _statement.executeQuery(query);
