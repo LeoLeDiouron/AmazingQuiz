@@ -68,6 +68,9 @@ public class DatabaseManager {
         return exeResQuery("SELECT * FROM QUESTIONS;");
     }
 
+    public ResultSet updateNameUser(User user, String name) {
+        return  exeResQuery("UPDATE USERS SET name=\'"+name+"\' WHERE name = \'"+user.getName() + "\'");}
+
     public void deleteUser(User user) {
         exeQuery("DELETE FROM USERS WHERE name=\'" + user.getName() + "\'");
     }

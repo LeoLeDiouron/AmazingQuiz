@@ -65,6 +65,7 @@ public class Menu {
         JButton button_play = new JButton("Play");
         JButton button_question = new JButton("Create a question");
         JButton button_classment = new JButton("See the classment");
+        JButton button_changename = new JButton("Change my name");
         JButton button_delete = new JButton("Delete my account");
         JButton button_quit = new JButton("Return to user selection");
 
@@ -86,6 +87,12 @@ public class Menu {
                 app.classment();
             }
         });
+        button_changename.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.changeNameMenu();
+            }
+        });
         button_delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,6 +111,7 @@ public class Menu {
         _panel.add(button_play);
         _panel.add(button_question);
         _panel.add(button_classment);
+        _panel.add(button_changename);
         _panel.add(button_delete);
         _panel.add(button_quit);
         _panel.revalidate();
@@ -131,6 +139,34 @@ public class Menu {
         _panel.add(text_title);
         _panel.add(text_classment);
         _panel.add(button_quit);
+        _panel.revalidate();
+        _panel.repaint();
+    }
+
+    public void displayChangeName(final App app) {
+        JLabel text_title = new JLabel("Write your new name");
+        final JTextArea textarea_name = new JTextArea();
+        JButton button_validate = new JButton("Validate");
+        JButton button_cancel = new JButton("Cancel");
+
+        button_validate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.changeNameUser(textarea_name.getText());
+            }
+        });
+        button_cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.launchMenu(app.getUser());
+            }
+        });
+
+        _panel.removeAll();
+        _panel.add(text_title);
+        _panel.add(textarea_name);
+        _panel.add(button_validate);
+        _panel.add(button_cancel);
         _panel.revalidate();
         _panel.repaint();
     }

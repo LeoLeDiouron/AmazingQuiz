@@ -91,11 +91,30 @@ public class App {
     }
 
     /*
+    description: ask to the GUI to display the name menu
+    return: nothing
+    params: nothing
+    */
+    public void changeNameMenu() {_frame.getMenu().displayChangeName(this);}
+
+    /*
     description: ask to the GUI to display the menu
     return: nothing
     params: nothing
     */
     public void returnMenu() {
+        _frame.getMenu().displayMenu(this);
+    }
+
+    /*
+    description: change the name of the user
+    return: nothing
+    params: String - new name of the user
+    */
+    public void changeNameUser(String name) {
+        name = name.replace(",","").replace("'", "").replace("\"", "");
+        _db_manager.updateNameUser(_user, name);
+        _user.setName(name);
         _frame.getMenu().displayMenu(this);
     }
 
