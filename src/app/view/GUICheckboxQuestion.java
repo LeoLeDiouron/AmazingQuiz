@@ -8,12 +8,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/*
+description: the class "GUICheckboxQuestion" manages the GUI about the question of type "Checkbox"
+*/
 public class GUICheckboxQuestion extends GUIQuestion {
 
+    /*
+    description:  constructor of the class, call the constructor of the parent class "GUIQuestion"
+    return: nothing
+    params: JPanel - panel created by the class "GUI"
+    */
     public GUICheckboxQuestion(JPanel panel) {
         super(panel);
     }
 
+    /*
+    description: display the GUI of a question of type "Checkbox"
+    return: nothing
+    params: App - class App which communicate with the GUI
+    params: Question - question to display
+    */
     public void display(final App app, Question question) {
         final ArrayList<JCheckBox> checkboxes = new ArrayList<>();
 

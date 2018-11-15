@@ -175,9 +175,9 @@ public class App {
         boolean result = _question_manager.getQuestion().checkGoodAnswers(answer);
         if (result) {
             _user.increaseScore();
-            _frame.getGame().displayQuestionOk(this);
+            _frame.getGame().displayResultQuestion(this, "Good answer !");
         } else {
-            _frame.getGame().displayQuestionWrong(this, _question_manager.getQuestion().getGoodAnswer());
+            _frame.getGame().displayResultQuestion(this, "Bad answer ! The good answer was " + _question_manager.getQuestion().getGoodAnswer());
         }
         _question_manager.increaseIndexQuestion();
     }

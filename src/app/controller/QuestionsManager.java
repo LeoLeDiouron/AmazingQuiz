@@ -1,7 +1,5 @@
 package app.controller;
 
-import app.controller.Question;
-
 import java.util.ArrayList;
 
 /*

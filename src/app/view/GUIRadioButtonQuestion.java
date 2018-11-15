@@ -8,12 +8,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/*
+description: the class "GUIRadioButtonQuestion" manages the GUI about the question of type "Radio Button"
+*/
 public class GUIRadioButtonQuestion extends GUIQuestion {
 
+    /*
+    description:  constructor of the class, call the constructor of the parent class "GUIQuestion"
+    return: nothing
+    params: JPanel - panel created by the class "GUI"
+    */
     public GUIRadioButtonQuestion(JPanel panel) {
         super(panel);
     }
 
+    /*
+    description: display the GUI of a question of type "Radio Button"
+    return: nothing
+    params: App - class App which communicate with the GUI
+    params: Question - question to display
+    */
     public void display(final App app, Question question) {
         final ArrayList<JRadioButton> answers = new ArrayList<>();
 

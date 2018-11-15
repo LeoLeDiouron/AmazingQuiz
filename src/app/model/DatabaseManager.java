@@ -11,11 +11,19 @@ import java.util.ArrayList;
 
 import static java.lang.System.exit;
 
+/*
+description: the class "DatabaseManager" links the project with the Postgres database
+*/
 public class DatabaseManager {
 
     private Connection _connection;
     private Statement _statement;
 
+    /*
+    description: constructor of the class, initalises the connection with the database
+    return: nothing
+    params: nothing
+    */
     public DatabaseManager() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -32,7 +40,12 @@ public class DatabaseManager {
         }
     }
 
-    public ResultSet exeResQuery(String query) {
+    /*
+    description: execute a query and return the result
+    return: ResultSet - the result of the query
+    params: String - the query to execute
+    */
+    private ResultSet exeResQuery(String query) {
 
         try {
             Class.forName("org.postgresql.Driver");
@@ -50,7 +63,12 @@ public class DatabaseManager {
         return null;
     }
 
-    public void exeQuery(String query) {
+    /*
+    description: execute a query
+    return: nothing
+    params: String - the query to execute
+    */
+    private void exeQuery(String query) {
         try {
             _statement.executeQuery(query);
         } catch (java.sql.SQLException e) {
@@ -58,23 +76,57 @@ public class DatabaseManager {
         }
     }
 
+    /*
+    description: get all the users of the database
+    return: ResultSet - the result from the database
+    params: nothing
+    */
     public ResultSet getUsers() {
         return exeResQuery("SELECT * FROM USERS");
     }
 
+    /*
+    description: get all the users of the database, sorted by their best score
+    return: ResultSet - the result from the database
+    params: nothing
+    */
     public ResultSet getUsersClassment() {return exeResQuery("SELECT * FROM USERS ORDER BY score DESC");}
 
+    /*
+    description: get all the questions
+    return: ResultSet - the result from the database
+    params: nothing
+    */
     public ResultSet getQuestions() {
         return exeResQuery("SELECT * FROM QUESTIONS;");
     }
 
-    public ResultSet updateNameUser(User user, String name) {
-        return  exeResQuery("UPDATE USERS SET name=\'"+name+"\' WHERE name = \'"+user.getName() + "\'");}
+    /*
+    description: change the name of a user in the database
+    return: nothing
+    params: User - the user who change its name
+    params: String - the new name
+    */
+    public void updateNameUser(User user, String name) {
+        exeQuery("UPDATE USERS SET name=\'"+name+"\' WHERE name = \'"+user.getName() + "\'");
+    }
 
+    /*
+    description: delete a user of the database
+    return: nothing
+    params: User - the user to delete
+    */
     public void deleteUser(User user) {
         exeQuery("DELETE FROM USERS WHERE name=\'" + user.getName() + "\'");
     }
 
+    /*
+    description: add a new user to the database
+    return: nothing
+    params: Integer - id of the user
+    params: String - name of the user
+    params: Integer - score of the user
+    */
     public void createUser(int id, String name, int score) {
         try {
             String sql = "INSERT INTO users (id,name,score) VALUES (" + Integer.toString(id) + ",'" + name + "'," + Integer.toString(score) + ");";
@@ -84,6 +136,11 @@ public class DatabaseManager {
         }
     }
 
+    /*
+    description: add a question to the database
+    return: nothing
+    params: Question - question to add
+    */
     public void createQuestion(Question question) {
         ResultSet res = exeResQuery("SELECT count(id) as nb FROM QUESTIONS");
         try {
@@ -111,6 +168,11 @@ public class DatabaseManager {
         }
     }
 
+    /*
+    description: update the best score of a user
+    return: nothing
+    params: User - the user who update its new best score
+    */
     public void updateMaxScore(User user) {
         exeQuery("UPDATE USERS SET score=" + Integer.toString(user.getMaxScore()) + " WHERE name=\'" + user.getName() + "\';");
     }
