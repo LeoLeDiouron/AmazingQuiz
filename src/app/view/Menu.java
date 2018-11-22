@@ -9,16 +9,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/*
+description: the class "Menu" manages the displaying of all the parts of the menu of the game
+*/
 public class Menu {
 
     private JPanel _panel;
     private Border _border;
 
+    /*
+    description: constructor of the class, get the object panel and border from the GUI class
+    return: nothing
+    params: JPanel - panel to display informations
+    params: Border - border created by the GUI class
+    */
     public Menu(JPanel panel, Border border) {
         _panel = panel;
         _border = border;
     }
 
+    /*
+    description: displays the connection to the game, where the user has to create a new player or select an existing one
+    return: nothing
+    params: App - class App which communicate with the GUI
+    params: ArrayList<User> - list of the users from the database
+    */
     public void displayUserSelection(final App app, final ArrayList<User> users) {
 
         JLabel text_title = new JLabel("THE AMAZING QUIZ");
@@ -60,6 +75,11 @@ public class Menu {
         _panel.repaint();
     }
 
+    /*
+    description: displays all the avaible features of the menu
+    return: nothing
+    params: App - class App which communicate with the GUI
+    */
     public void displayMenu(final App app) {
         JLabel text_title = new JLabel("Welcome " + app.getUser().getName() + ", your best score is " + Integer.toString(app.getUser().getMaxScore()) + "/10.");
         JButton button_play = new JButton("Play");
@@ -118,6 +138,12 @@ public class Menu {
         _panel.repaint();
     }
 
+    /*
+    description: displays the list of users sorted by their best score
+    return: nothing
+    params: App - class App which communicate with the GUI
+    params: ArrayList<User> - list of users sorted by their best score
+    */
     public void displayClassment(final App app, ArrayList<User> list_players) {
         JLabel text_title = new JLabel("Classment");
         JButton button_quit = new JButton("Return to menu");
@@ -143,6 +169,11 @@ public class Menu {
         _panel.repaint();
     }
 
+    /*
+    description: displays the menu to change the name of the player
+    return: nothing
+    params: App - class App which communicate with the GUI
+    */
     public void displayChangeName(final App app) {
         JLabel text_title = new JLabel("Write your new name");
         final JTextArea textarea_name = new JTextArea();
@@ -171,6 +202,11 @@ public class Menu {
         _panel.repaint();
     }
 
+    /*
+    description: displays the menu to delete the player
+    return: nothing
+    params: App - class App which communicate with the GUI
+    */
     public void displayDeleteAccount(final App app) {
         JLabel text_title = new JLabel("Are you sure to delete your account ?");
         JButton button_validate = new JButton("Yes");
@@ -197,6 +233,12 @@ public class Menu {
         _panel.repaint();
     }
 
+    /*
+    description: displays the menu to create a new question
+    return: nothing
+    params: App - class App which communicate with the GUI
+    params: String - the message to display after the user has created a question (success or fail)
+    */
     public void displayCreateQuestion(final App app, String message) {
 
         JLabel text_title = new JLabel("Create a new question");
