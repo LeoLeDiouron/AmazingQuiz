@@ -18,26 +18,36 @@ public class DatabaseManager {
 
     private Connection _connection;
     private Statement _statement;
+    private Boolean _active;
 
     /*
-    description: constructor of the class, initalises the connection with the database
+    description: constructor of the class, initalizes the connection with the database
     return: nothing
     params: nothing
     */
-    public DatabaseManager() {
+    public DatabaseManager(String name, String user, String pwd) {
+        _active = true;
         try {
             Class.forName("org.postgresql.Driver");
-            _connection = DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/amazing_quiz",
-                            "postgres", "loukoum");
+            _connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + name, user, pwd);
             _statement = _connection.createStatement();
         } catch (java.lang.ClassNotFoundException e) {
             System.out.printf("java.lang.ClassNotFoundException : " + e.getMessage());
             exit(0);
         } catch (java.sql.SQLException e) {
             System.out.printf("java.sql.SQLException : " + e.getMessage());
-            exit(0);
+            _active = false;
+            //exit(0);
         }
+    }
+
+    /*
+    description: get the attribute active, which say if the database has been initialized
+    return: Boolean - if the database has been initialized or not
+    params: nothing
+    */
+    public Boolean isActive() {
+        return _active;
     }
 
     /*

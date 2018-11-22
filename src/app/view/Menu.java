@@ -29,7 +29,47 @@ public class Menu {
     }
 
     /*
-    description: displays the connection to the game, where the user has to create a new player or select an existing one
+    description: displays the connection to the database, where the user has to enter all the informations about his database
+    return: nothing
+    params: App - class App which communicate with the GUI
+    */
+    public void displayDatabaseOptions(final App app) {
+
+        JLabel text_name_db = new JLabel("Name of the database");
+        JLabel text_user_db = new JLabel("Name of the user");
+        JLabel text_pwd_db = new JLabel("Password of the database");
+
+        final JTextArea textarea_name_db = new JTextArea(1,10);
+        final JTextArea textarea_user_db = new JTextArea(1,10);
+        final JTextArea textarea_pwd_db = new JTextArea(1,10);
+
+        textarea_name_db.setBorder(BorderFactory.createCompoundBorder(_border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        textarea_user_db.setBorder(BorderFactory.createCompoundBorder(_border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        textarea_pwd_db.setBorder(BorderFactory.createCompoundBorder(_border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+
+        JButton button_validate = new JButton("Validate");
+
+        button_validate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.initializeDatabase(textarea_name_db.getText(), textarea_user_db.getText(), textarea_pwd_db.getText());
+            }
+        });
+
+        _panel.removeAll();
+        _panel.add(text_name_db);
+        _panel.add(textarea_name_db);
+        _panel.add(text_user_db);
+        _panel.add(textarea_user_db);
+        _panel.add(text_pwd_db);
+        _panel.add(textarea_pwd_db);
+        _panel.add(button_validate);
+        _panel.revalidate();
+        _panel.repaint();
+    }
+
+    /*
+    description: displays the user connection to the game, where the user has to create a new player or select an existing one
     return: nothing
     params: App - class App which communicate with the GUI
     params: ArrayList<User> - list of the users from the database

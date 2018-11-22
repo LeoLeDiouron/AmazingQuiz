@@ -24,7 +24,6 @@ public class App {
     params: nothing
     */
     public App() {
-        _db_manager = new DatabaseManager();
         _frame = new GUI("Amazing Quiz");
         _users_manager = new UsersManager();
         _question_manager = new QuestionsManager();
@@ -36,7 +35,6 @@ public class App {
     params: nothing
     */
     public void run() {
-        setUsers();
         setGUI();
     }
 
@@ -46,7 +44,7 @@ public class App {
     params: nothing
     */
     public void setGUI() {
-        _frame.getMenu().displayUserSelection(this, _users_manager.getUsers());
+        _frame.getMenu().displayDatabaseOptions(this);
         _frame.setSize(500,500);
         _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         _frame.setVisible(true);
@@ -61,6 +59,23 @@ public class App {
         _user = user;
         _frame.newGame();
         _frame.getMenu().displayMenu(this);
+    }
+
+    /*
+    description: initalizes the database with the configuration given by the user
+    return: nothing
+    params: String - Name of the database
+    params: String - Name of the user of the database
+    params: String - Password of the database
+    */
+    public void initializeDatabase(String name, String user, String pwd) {
+        _db_manager = new DatabaseManager(name, user, pwd);
+        if (_db_manager.isActive()) {
+            setUsers();
+            _frame.getMenu().displayUserSelection(this, _users_manager.getUsers());
+        } else {
+            _frame.getMenu().displayDatabaseOptions(this);
+        }
     }
 
     /*
